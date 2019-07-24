@@ -1,0 +1,55 @@
+{
+    "seed" : 12345,
+    "window" : {
+        "width" : 1920,
+        "height" : 900,
+        "bgcolor" : [0, 0, 0]
+    },
+    "sounds" : [
+        {
+            "type" : "file",
+            "filename" : "drip.ogg",
+            "duration" : 2
+        },
+        {
+            "type" : "file",
+            "filename" : "sonar.ogg",
+            "duration" : 3
+        }
+    ],
+    "periods" : [
+        0.1,
+        0.2,
+        0.3
+    ],
+    "template" : {
+        "duty" : 0.5,
+        "phase" : "expr:random.random()",
+        "radius" : 50,
+        "loc" : [
+            "expr:random.random()*config['window']['width']",
+            "expr:random.random()*config['window']['height']"
+        ],
+        "motile" : true
+    },
+    "dotgroups" : [
+        {
+            "count" : 15,
+            "period" : "expr:random.choice(config['periods'])",
+            "color" : [0.5, 0.5, 0.2],
+            "template" : "expr:config['template']"
+        },
+        {
+            "count" : 15,
+            "period" : "expr:random.choice(config['periods'])",
+            "color" : [0.5, 0.9, 0],
+            "template" : "expr:config['template']"
+        },
+        {
+            "count" : 15,
+            "period" : "expr:random.choice(config['periods'])",
+            "color" : [0.9, 0.1, 0.5],
+            "template" : "expr:config['template']"
+        }
+    ]
+}
