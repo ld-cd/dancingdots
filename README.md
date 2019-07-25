@@ -12,7 +12,7 @@ Once all of those are installed, simply clone this repository and run `python3 m
 
 ## Configuration
 
-In order to tease out the details of this illusion the program was built to be highly configureable. The configuration file has four crucial sections, dotgroups, sounds, and window.
+In order to tease out the details of this illusion the program was built to be highly configureable. The configuration file has three crucial sections: dotgroups, sounds, and window.
 
 The configuration file is a normal json file with one exception, any field can be replaced with a python expresion by writing the string `"expr:"` followed by some code (ie `"expr:random.choice([0, 1, 2])"`). This allows any of the various parameters to be randomized or minipulated in a multitude of ways. In this environment the python packages `json`, `colorsys`, and `random` are available. In addition the configfile is bound to the variable `config` which allows the configfile to be self modifiying and makes the configuration syntax turing complete. Additionally the random number generator in the environment can be seeded by the `"seed"` parameter at the top of the config to enable consistent trials. It is recommended you look at the `sample_config.json` file to see how this all fits together.
 
