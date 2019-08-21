@@ -8,12 +8,12 @@
     "sounds" : [
         {
             "type" : "file",
-            "filename" : "drip.ogg",
+            "filename" : "drip.wav",
             "duration" : 2
         },
         {
             "type" : "file",
-            "filename" : "sonar.ogg",
+            "filename" : "sonar.wav",
             "duration" : 3
         }
     ],
