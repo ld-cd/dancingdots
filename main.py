@@ -8,8 +8,7 @@ args = parse.parse_args()
 
 config = configuration.read_config(configuration.open_config(args.configfile))
 dots = configuration.generate_dots(config)
-for i in configuration.generate_tracks(config):
-    i.play()
+configuration.generate_tracks(config)
 
 conf = pyglet.gl.Config(sample_buffers=1, samples=4)
 window = pyglet.window.Window(width=config['window']['width'], height=config['window']['height'], config=conf)

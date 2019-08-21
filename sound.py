@@ -1,28 +1,14 @@
-import pyglet
+import pyglet, pydub, simpleaudio
 
 def make_player(track):
-    sources = [make_source(i) for i in track]
-    player = pyglet.media.Player()
-    for i in range(len(sources)):
-        sg = pyglet.media.SourceGroup(sources[i].audio_format, None)
-        sg.loop = True
-        sg.queue(sources[i])
-        make_scheduler(i, sg, track, player)
-    return player
-
-def make_scheduler(i, sg, track, player):
-    phase = sum([track[k]['duration'] for k in range(len(track)) if k < i])
-    period = sum([k['duration'] for k in track])
-    def play_it(t):
-        player.queue(sg)
-        player.next_source()
-    periodic = lambda t: pyglet.clock.schedule_interval(play_it, period)
-    pyglet.clock.schedule_once(periodic, phase)
-    if phase == 0:
-        player.queue(sg)
-    else:
-        pyglet.clock.schedule_once(play_it, phase)
+    sounds = sum([make_source(i) for i in track])
+    simpleaudio.play_buffer(sounds.raw_data, sounds.channels, sounds.sample_width, sounds.frame_rate)
+    pyglet.clock.schedule_interval(
+        lambda t: simpleaudio.play_buffer(sounds.raw_data, num_channels = sounds.channels, bytes_per_sample = sounds.sample_width, sample_rate = sounds.frame_rate)
+        , len(sounds)/1000)
 
 def make_source(snippet):
     if snippet['type'] == "file":
-        return pyglet.media.load(snippet['filename'], streaming=False)
+        audio = pydub.AudioSegment.from_file(snippet['filename'])
+    audio = audio*((1000*snippet["duration"])//len(audio)) + audio[:(snippet["duration"]*1000)%len(audio)]
+    return audio
