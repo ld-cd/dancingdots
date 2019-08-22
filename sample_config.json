@@ -3,25 +3,10 @@
     "window" : {
         "width" : 1920,
         "height" : 900,
-        "bgcolor" : [0, 0, 0]
+        "bgcolor" : [0, 0, 0],
+        "scenepairs" : "expr:[i for i in itertools.permutations(config['scenes'])]",
+        "blind" : true
     },
-    "sounds" : [
-        {
-            "type" : "file",
-            "filename" : "drip.wav",
-            "duration" : 2
-        },
-        {
-            "type" : "file",
-            "filename" : "sonar.wav",
-            "duration" : 3
-        }
-    ],
-    "periods" : [
-        0.1,
-        0.2,
-        0.3
-    ],
     "template" : {
         "duty" : 0.5,
         "phase" : "expr:random.random()",
@@ -35,21 +20,56 @@
     "dotgroups" : [
         {
             "count" : 15,
-            "period" : "expr:random.choice(config['periods'])",
+            "period" : 0.1,
             "color" : [0.5, 0.5, 0.2],
             "template" : "expr:config['template']"
         },
         {
             "count" : 15,
-            "period" : "expr:random.choice(config['periods'])",
+            "period" : 0.2,
             "color" : [0.5, 0.9, 0],
             "template" : "expr:config['template']"
         },
         {
             "count" : 15,
-            "period" : "expr:random.choice(config['periods'])",
+            "period" : 0.3,
             "color" : [0.9, 0.1, 0.5],
             "template" : "expr:config['template']"
         }
-    ]
+    ],
+    "scenes" : {
+        "fast" : {
+            "dots" : "expr:config['dotgroups']",
+            "sounds" : [
+                {
+                    "type" : "file",
+                    "filename" : "fast.wav",
+                    "duration" : 20
+                }
+            ],
+            "duration" : 20
+        },
+        "medium" : {
+            "dots" : "expr:config['dotgroups']",
+            "sounds" : [
+                {
+                    "type" : "file",
+                    "filename" : "medium.wav",
+                    "duration" : 20
+                }
+            ],
+            "duration" : 20
+        },
+        "slow" : {
+            "dots" : "expr:config['dotgroups']",
+            "sounds" : [
+                {
+                    "type" : "file",
+                    "filename" : "slow.wav",
+                    "duration" : 20
+                }
+            ],
+            "duration" : 20
+        }
+    }
 }

@@ -1,4 +1,4 @@
-import json, colorsys, random
+import json, colorsys, random, itertools
 
 import dot, sound
 
@@ -18,20 +18,21 @@ def generate_dot(dotgroup, window_size, config):
     args['loc'] = [ep(i, config) for i in args['loc']]
     return dot.Dot(**args)
 
-def generate_dots(config):
+def generate_dots(config, scene):
     dots = []
-    for i in config['dotgroups']:
+    for i in config['scenes'][scene]['dots']:
         dots.extend([generate_dot(i, [config['window']['width'], config['window']['height']], config) for _ in range(i['count'])])
     return dots
 
-def generate_tracks(config):
-    return [sound.make_player(config['sounds'])]
+def generate_tracks(config, scene):
+    return [sound.make_player(config['scenes'][scene]['sounds'])]
 
 def read_config(config):
     if 'seed' in config:
         config['seed'] = ep(config['seed'], config)
         random.seed(config['seed'])
     config['window'] = {i:ep(config['window'][i], config) for i in ep(config['window'], config)}
-    config['dotgroups'] = [{i:ep(k[i], config) for i in ep(k, config)} for k in ep(config['dotgroups'], config)]
-    config['sounds'] = [{i:ep(k[i], config) for i in ep(k, config)} for k in ep(config['sounds'], config)]
+    for i in config['scenes']:
+        config['scenes'][i]['dots'] = [{i:ep(k[i], config) for i in ep(k, config)} for k in ep(config['scenes'][i]['dots'], config)]
+        config['scenes'][i]['sounds'] = [{i:ep(k[i], config) for i in ep(k, config)} for k in ep(config['scenes'][i]['sounds'], config)]
     return config
